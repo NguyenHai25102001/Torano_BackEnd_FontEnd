@@ -941,4 +941,208 @@ button {
             }
         }
     }
+    .pro-price{
+        background: #fafafa;
+        .pro-title{
+            min-width: 120px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        .pro-percent {
+            display: inline-block;
+            min-width: 36px;
+            padding: 4px 10px;
+            margin-left: 15px;
+            background: #ff0000;
+            color: #fff;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 600;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            border-radius: 10px;
+            vertical-align: text-bottom;
+            line-height: 1.5;
+            white-space: nowrap;
+        }
+    }
+}
+.btn-addtocart {
+    width: 100%;
+    min-height: 50px;
+
+    border: 1px solid #e70505;
+    color: #e70505;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+    position: relative;
+    &:before{
+        content: '';
+        position: absolute;
+        width: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+
+        transition: width .5s;
+        background: #e70505;
+        z-index: -1;
+    }
+    &:hover{
+        color: white;
+        &:before{
+            width: 100%;
+        }
+
+    }
+    span{
+        z-index: 2;
+    }
+
+}
+.btn-buynow {
+    width: 100%;
+    min-height: 50px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    text-transform: uppercase;
+
+}
+.btnred {
+    background-color: #e70505;
+    border-color: #e70505;
+}
+.wrap-account{
+    h4{
+        font-weight: 700;
+        padding: 0 1rem;
+        color: #cacaca;
+    }
+    .active{
+        color: black;
+    }
+    h4 + h4{
+        border-left: 3px solid black;
+    }
+    .form-control{
+        background: #ededed;
+        &:focus{
+            background: transparent;
+        }
+    }
+     input{
+        margin-bottom: 1.5rem;
+    }
+
+}
+.list-cart{
+    .cart-item{
+        display: flex;
+        position: relative;
+        width: 100%;
+        padding: 1rem 0.5rem;
+        border-bottom: 0.5px solid #7777;
+        .img{
+            width: 10% ;
+
+            .pt{
+                padding-top: 120%;
+            }
+
+        }
+        .item-info{
+
+        }
+
+    }
+    .media-right {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        max-width: 1 1 auto;
+
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+    .item--title{
+        font-size: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        a{
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+        }
+
+    }
+    .item-var{
+        font-size: 12px;
+    }
+    .item-price{
+
+            font-weight: 600;
+            color: #8f9bb3;
+
+    }
+    input{
+        width: 28px;
+        text-align: center;
+        border: 0;
+        outline: 0;
+    }
+    .qty-btn {
+        float: left;
+        font-weight: 500;
+        font-size: 18px;
+        padding: 0;
+        height: 28px;
+        width: 28px;
+        text-align: center;
+        background: #f9f9f9;
+        color: var(--shop-color-text);
+        border: 1px solid #f9f9f9;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .item-remove{
+        position: absolute;
+        top: 5px;
+        left: 0;
+        font-size: 8px;
+        text-align: center;
+        background: #8f9bb3;
+        color: white;
+        width: 20px;
+        height: 20px;
+
+    }
+    .cart-note{
+        background: #f3f4f4;
+    }
+}
+.sidebarCart-sticky{
+    position: sticky;
+    top: 0;
+}
+.text-red{
+    color: red;
+}
+.bg-red{
+    background: red;
+}
+.order-summary{
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+}
+
+.layout-payment{
+
 }

@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import FormatPrice from "./FormatPrice";
@@ -29,83 +28,10 @@ import {
     TwitterIcon,
 } from "react-share";
 import {Link} from "react-router-dom";
+import {product} from '../components/testAPI'
 function ProductQuickView({status,handleIsOpen}) {
     const [quantity,setQuantity]=React.useState(1);
-    const product={
-        name:'Áo khoác da lộn basic cổ cao EWCL002',
-        code:'EWCL00231PE00SB_LBE-S',
-        status:true,
-        brand:'TORANO',
-        price:675000,
-        sale:0.1,
-        images:[
-            {
-                path:'https://product.hstatic.net/200000690725/product/53291247328_6a10f65c68_k_c48ce308b98c4e02ac2fe22b90a28c92_compact.jpg'
-            },
-            {
-                path: 'https://product.hstatic.net/200000690725/product/53291004106_2ecbdd0476_k_eb63e8b148e040f59bd8e461ca6868cc_master.jpg'
-            },
-            {
-                path: 'https://product.hstatic.net/200000690725/product/53291003996_058b8a3db0_k_3e5db04784954e52a6e7fdb4012b4ed0_master.jpg'
-            }
-            ,{
-                path: 'https://product.hstatic.net/200000690725/product/53291246808_a50ace7ead_k_30ea86df07ad4cbd85460af6104a759d_master.jpg'
-            }, {
-                path:'https://product.hstatic.net/200000690725/product/53291247328_6a10f65c68_k_c48ce308b98c4e02ac2fe22b90a28c92_compact.jpg'
-            },
-            {
-                path: 'https://product.hstatic.net/200000690725/product/53291004106_2ecbdd0476_k_eb63e8b148e040f59bd8e461ca6868cc_master.jpg'
-            },
-            {
-                path: 'https://product.hstatic.net/200000690725/product/53291003996_058b8a3db0_k_3e5db04784954e52a6e7fdb4012b4ed0_master.jpg'
-            }
-            ,{
-                path: 'https://product.hstatic.net/200000690725/product/53291246808_a50ace7ead_k_30ea86df07ad4cbd85460af6104a759d_master.jpg'
-            },
-        ],
-        color:[{
-            id:'1',
-            name:'Green',
-            sizes: [
-                {
-                    id: '1',
-                    name: 'S',
-                    quantity:1
-                },
-                {
-                    id: '2',
-                    name: 'M',
-                    quantity:1
-                },
-                // Add more sizes as needed
-            ]
 
-        },{
-
-            id:'1',
-            name:'Red',
-            sizes: [
-                {
-                    id: '1',
-                    name: 'S',
-                    quantity:0
-                },
-                {
-                    id: '2',
-                    name: 'M',
-                    quantity:0
-                },
-                {
-                    id: '2',
-                    name: 'L',
-                    quantity:1
-                },
-                // Add more sizes as needed
-            ]
-
-        }
-        ],
-    }
     // url
     const url='https://www.youtube.com/watch?v=-LoPYVsBpc0&ab_channel=MiuMusic';
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -140,7 +66,6 @@ function ProductQuickView({status,handleIsOpen}) {
     return (
         <div className={'wrapper_quick_view '+(status===true?'is-open-view':'')}>
             <div className="quick-view" onClick={handleIsOpen}>
-
             </div>
             <div className="view-product-content rounded">
                 <form>
@@ -149,18 +74,13 @@ function ProductQuickView({status,handleIsOpen}) {
                             <div className="position-relative h-auto  main-swiper">
 
                                 <Swiper
-
                                     thumbs={thumbsSwiper != null ? { swiper: thumbsSwiper } : undefined}
                                     spaceBetween={10}
-
                                     navigation={{
                                         nextEl: '.swiper-button-next-custom',
                                         prevEl: '.swiper-button-prev-custom',
                                     }}
-
                                     modules={[FreeMode, Navigation, Thumbs]}
-
-
                                 >
                                     {product.images.map((item, index) => (
                                         <SwiperSlide key={index}>

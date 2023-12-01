@@ -23,6 +23,8 @@ import {
 } from "react-router-dom";
 import "./scss/styles.scss";
 const DefaultLayout = React.lazy(() => import("./layout/DefautltLayout"));
+const Payment = React.lazy(() => import("./views/Payment"));
+const Admin = React.lazy(() => import("./Admin/index"));
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse">Loading.....</div>
@@ -33,6 +35,14 @@ function App() {
     {
       path: "*",
       element: <DefaultLayout />,
+    },
+    {
+      path: "/payment",
+      element: <Payment />,
+    },
+    {
+      path: "/admin/*",
+      element: <Admin />,
     },
   ]);
   return (

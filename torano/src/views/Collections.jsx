@@ -1,7 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import {lisCategory} from "../components/test"
+import {lisCategory} from "../components/testAPI"
 import {FormControl, MenuItem, Select,} from "@mui/material";
 import ProductItem from "../components/ProductItem";
 import ProductQuickView from "../components/ProductQuickView";

@@ -1,0 +1,33 @@
+.sidebar .nav-item .nav-link[data-toggle=collapse].collapsed::after {
+  content: '';
+}
+
+.category-create{
+  position: fixed;
+  min-height: 40vh;
+  width: 30%;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  overflow-y: auto;
+  background: white;
+  z-index: 99;
+}
+.sidebar-main .category-create.is-opened~.sitenav-mask {
+  z-index: 90;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  visibility: visible;
+}
+.add-img-category{
+  width: 100%;
+  background: #FAEED1;
+  .pt{
+    padding-top: 50%;
+
+  }
+
+}
+
+

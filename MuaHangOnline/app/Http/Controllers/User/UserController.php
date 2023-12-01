@@ -88,10 +88,8 @@ class UserController extends Controller
             }
             DB::commit();
             return $this->createdNewToken($token);
-
         } catch (\Exception $exception) {
             DB::rollBack(); // Error occurred
-
             return response()->json(['error' => $exception->getMessage()], 500);
         }
     }
@@ -196,7 +194,7 @@ class UserController extends Controller
     }
     /**
      * @param Request $request
-     * @param         $id
+     * @param  $id
      *Edit Address
      * @return \Illuminate\Http\JsonResponse
      */
@@ -247,7 +245,6 @@ class UserController extends Controller
     public function destroyAddress(Request $request,$id){
         DB::beginTransaction();
         try {
-
             $address=User\AddressModel::find($id);
             if(!$address){
                 return response()->json([

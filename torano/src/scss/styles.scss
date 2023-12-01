@@ -182,3 +182,28 @@ ol {
 .product-gallery {
     width: 30%;
 }}
+
+//Smart Phone
+@media screen and (max-width: 576px) {
+    .product-gallery{
+
+        position: static !important;
+
+    }
+}
+//Tablet
+@media screen and (max-width: 768px) {
+
+}
+//Big Tablet
+@media screen and (max-width: 768px) {
+
+}
+//Desktop
+@media screen and (max-width: 1200px) {
+
+}
+//Big Desktop
+@media screen and (max-width: 1400px) {
+
+}
