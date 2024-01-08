@@ -81,16 +81,19 @@ class UserController extends Controller
                     'password.min'      => 'Mật khẩu phải có ít nhất 8 ký tự.',
                 ]);
             if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first(), 'status' => false], 400);
+                return response()->json([
+                    'status'=>false,'error' => $validator->errors()->first()], 400);
             }
             if (!$token = auth()->attempt($validator->validated())) {
-                return response()->json(['error' => 'Unauthorized', 422]);
+                return response()->json([
+                    'status'=>false
+                    ,'error' => 'Tài khoản và mật không chính xác', 422]);
             }
             DB::commit();
             return $this->createdNewToken($token);
         } catch (\Exception $exception) {
-            DB::rollBack(); // Error occurred
-            return response()->json(['error' => $exception->getMessage()], 500);
+            DB::rollBack();
+            return response()->json(['error' => 'Lỗi trong quá trình đăng nhập'], 500);
         }
     }
     /**
@@ -114,9 +117,10 @@ class UserController extends Controller
          */
         protected function createdNewToken($token){
             return response()->json([
+                'status'=>true,
                 'access_token'=>$token,
                 'token_type'=>'bearer',
-                'expires_in'=>auth()->factory()->getTTl()*60,
+                'expires_in'=>auth()->factory()->getTTl()*60*24*15,
                 'user'=>auth()->user(),
             ]);
         }
@@ -292,4 +296,15 @@ class UserController extends Controller
             return response()->json(['status' => false, 'error' => $exception->getMessage()], 500);
         }
     }
+
+    public function logout(Request $request)
+    {
+        try {
+            auth()->logout();
+            return response()->json(['status' => true, 'message' => 'Đăng xuất thành công']);
+        } catch (\Exception $exception) {
+            return response()->json(['status' => false, 'error' => 'Lỗi trong quá trình đăng xuất'], 500);
+        }
+    }
+
 }

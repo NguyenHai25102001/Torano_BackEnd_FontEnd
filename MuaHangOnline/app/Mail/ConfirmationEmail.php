@@ -12,6 +12,7 @@ class ConfirmationEmail extends Mailable
 
     public $user;
 
+
     /**
      * Create a new message instance.
      *
@@ -19,6 +20,7 @@ class ConfirmationEmail extends Mailable
      */
     public function __construct($user)
     {
+
         $this->user = $user;
     }
 

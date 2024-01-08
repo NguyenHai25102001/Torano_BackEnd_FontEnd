@@ -17,7 +17,7 @@ class CheckAdminPermission
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Gate::denies('create',Product::class)){
+        if(Gate::denies('create',Product\ProductModel::class)){
             return response()->json(['error' => 'Bạn không có quyền thêm sản phẩm',
                 'status'=>false], 403);
         }

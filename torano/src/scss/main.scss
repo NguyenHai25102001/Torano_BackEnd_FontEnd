@@ -520,7 +520,7 @@ button {
                 left: 50%;
                 transform: translateX(-50%) translateY(100%);
                 opacity: 1;
-                transition: transform 0.5s ease, opacity 0.5s ease;
+                transition: transform 0.3s ease;
 
                 .proloop-cart{
                     white-space: nowrap;
@@ -613,6 +613,8 @@ button {
         background:white;
         z-index: 99;
         margin: 0 auto;
+        overflow-y: auto;
+        bottom: 2rem;
     }
     .product-image{
         width: 100% ;
@@ -646,6 +648,9 @@ button {
         }
     }
 
+}
+.pro-color{
+    min-width: 100px;
 }
 .product-variants{
     .variant-title{
@@ -901,9 +906,8 @@ button {
     }
 }
 .sticky-sidebar{
-    position: -webkit-sticky;
     position: sticky;
-    top: 0px;
+    top: 0;
     transition: top 400ms ease;
 }
 .filter-content{
@@ -1061,8 +1065,6 @@ button {
     .media-right {
         -ms-flex: 1 1 auto;
         flex: 1 1 auto;
-        max-width: 1 1 auto;
-
         padding-left: 18px;
         padding-right: 18px;
     }
@@ -1145,4 +1147,69 @@ button {
 
 .layout-payment{
 
+}
+
+
+ .product-thumbnail-quantity {
+    font-size: 0.85714em;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 0.15em 0.65em;
+    border-radius: 2em;
+    background-color: rgba(153,153,153,0.9);
+    color: #fff;
+    position: absolute;
+    right: -0.75em;
+    top: -0.75em;
+    z-index: 2;
+}
+ /*loading...*/
+
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-right: 16px solid green;
+    border-bottom: 16px solid red;
+    border-left: 16px solid pink;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* end loading*/
+
+.menu-bars{
+    z-index: 99;
+    position: fixed;
+    top:0;
+    left: 0;
+    width:100vw;
+    height: 100vh;
+}
+.ssh{
+    position: absolute;
+    top:0;
+    width:100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100vh;
+}
+.content-mebu-bars{
+    position: absolute;
+    top: 0;
+    width: 350px;
+    height: 100vh;
+    background-color: white;
 }

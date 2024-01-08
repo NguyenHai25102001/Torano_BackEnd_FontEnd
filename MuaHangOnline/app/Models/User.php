@@ -62,4 +62,7 @@ class User extends Authenticatable implements JWTSubject
     public function address(){
         return $this->hasMany(AddressModel::class,'user_id','id');
     }
+    public function isAdmin(){
+        return $this->role->name==='admin';
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAdmin;
 use App\Http\Middleware\CheckAdminPermission;
 use App\Http\Middleware\CheckLoggedIn;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -68,6 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkLoginIn'=>CheckLoggedIn::class,
         'checkAdmin'=>CheckAdminPermission::class,
+        'isAdmin'=>CheckAdmin::class,
     ];
     protected $commands = [
         // ...

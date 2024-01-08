@@ -1,52 +1,126 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import React, {useState,useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-function SubCategoryCreate({onClose}) {
-    const [age, setAge] = React.useState('');
+import {createSubcategory} from "../../components/dataApi";
+import Swal from "sweetalert2";
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
-    return(
+function SubCategoryCreate({onClose, listCategories, categoryId}) {
+    const [cId, setCId] = React.useState('');
+    const [name, setName] = useState('');
+    useEffect(() => {
+
+        if (categoryId) {
+            setCId(categoryId);
+        }
+    }, [categoryId]);
+
+    const handleSubCreate = async (e) => {
+        e.preventDefault();
+        try {
+            const data = {
+                name: name,
+                category_id: cId
+            }
+            const response = await createSubcategory(data);
+            console.log(response)
+            if (response.status) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Thêm Subcategory thành công ",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(response => {
+                    setName('')
+                    window.location.reload();
+                });
+            } else {
+                let errorMessage = "";
+
+                for (const key in response.error) {
+                    if (response.error.hasOwnProperty(key) && Array.isArray(response.error[key]) && response.error[key].length > 0) {
+                        // Concatenate the first error message for each property
+                        errorMessage += response.error[key][0]
+                    }
+                }
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: errorMessage,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+
+
+        } catch (e) {
+            console.log(e)
+            let errorMessage = "";
+
+            for (const key in e.error) {
+                if (e.error.hasOwnProperty(key) && Array.isArray(e.error[key]) && e.error[key].length > 0) {
+                    // Concatenate the first error message for each property
+                    errorMessage = e.error[key][0]
+                }
+            }
+
+            if (!e.status) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: errorMessage,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+    }
+
+    return (
         <div className="sidebar-main">
             <div className={"category-create rounded shadow bg-body p-3 is-opened "}>
-                <form>
+                <form onSubmit={handleSubCreate}>
                     <div className="row">
                         <div className="col-md-12 my-2 fs-5 fw-bolder text-center text-primary">Thêm danh mục con</div>
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <label className='form-label' htmlFor='selectCategory'>Chọn danh mục </label>
 
-                            <FormControl sx={{ m: 0, minWidth: '100%' }} size="small">
+                            <FormControl sx={{m: 0, minWidth: '100%'}} size="small">
                                 <InputLabel id="demo-select-small-label">Chọn danh mục</InputLabel>
                                 <Select
                                     labelId="demo-select-small-label"
                                     id="selectCategory"
-                                    value={age}
+                                    value={cId}
                                     label="Age"
-                                    onChange={handleChange}
+                                    onChange={(e) => setCId(e.target.value)}
+                                    checked={cId.id === categoryId}
                                 >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    {
+                                        listCategories.map((category, idxCategory) => (
+                                            <MenuItem value={category.id}
+                                                      key={idxCategory}
+
+                                            >{category.name}</MenuItem>
+                                        ))
+
+                                    }
+
                                 </Select>
                             </FormControl>
 
                         </div>
-                        <div className="col-md-6">
-                            <label className='form-label' htmlFor='namCategory'>Tên danh mục </label>
-                            <input type="text" id='namCategory' className='form-control'/>
+                        <div className="col-md-12">
+                            <label className='form-label' htmlFor='namCategory'>Tên danh mục Sub </label>
+                            <input type="text" id='namCategory' value={name}
+                                   className='form-control'
+                                   onChange={(e) => setName(e.target.value)}/>
                         </div>
 
                         <div className="d-flex justify-content-center gap-3 mt-3">
                             <button type='reset' className='btn btn-danger' onClick={onClose}>Cancel</button>
-                            <button className='btn btn-primary' >Send</button>
+                            <button className='btn btn-primary'>Send</button>
                         </div>
                     </div>
                 </form>
@@ -56,4 +130,5 @@ function SubCategoryCreate({onClose}) {
     )
 
 }
+
 export default SubCategoryCreate;

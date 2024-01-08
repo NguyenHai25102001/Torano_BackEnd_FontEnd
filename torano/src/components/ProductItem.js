@@ -1,64 +1,91 @@
-import {useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
+
 import FormatPrice from "./FormatPrice";
-import ProductQuickView from "./ProductQuickView";
+
+import {ImageUrl} from "../Admin/components/dataApi";
+
+import {Link} from "react-router-dom";
+
+import {useDispatch, useSelector} from "react-redux";
+
+import {openProductQuickView, setProductId} from "../redux/slices/productQuickViewSlice";
 
 
-function ProductItem({handleIsOpen}) {
+function ProductItem({product}) {
+
+    const dispatch = useDispatch();
+
+    const handleOpen = () => {
+        dispatch(setProductId(product.id));
+
+        dispatch(openProductQuickView());
+    };
+
     return (
         <div className="wrapper__product-item w-100 bg-white">
-            <div className="product-content position-relative">
-                <div className='product-img position-relative'>
-                    <div className="img-after">
-                    <figure>
-                        <img src="	https://product.hstatic.net/200000690725/product/cs002_bce7c5c1befd47a09fd4acd42668fc94_master.jpg"
-                             alt=""
-                             className='object-fit-cover '/>
-                    </figure>
-                    </div>
-                    <div className="img-before ">
-                      <figure >
-                          <img src="https://product.hstatic.net/200000690725/product/53197790942_bf4bc7352a_o_9c76cdf68bfc41c2936861828ab4003c_master.jpg"
-                               alt=""
-                               className='object-fit-cover'/>
-                      </figure>
-                    </div>
-                    <div className="proloop-actions position-absolute w-100">
-                        <div className="d-flex w-100 px-2 justify-content-around align-items-center">
-                            <div className="proloop-cart bg-white text-uppercase px-3 py-2 fw-bold rounded" role={'button'}
-                            onClick={handleIsOpen}>
-                                <span className='me-1 fw-bolder'><i className="bi bi-bag"></i></span>
-                                Thêm vào giỏ
-                            </div>
-                            <div role='button' className="bg-dark d-inline-block text-white px-2 py-2 rounded "
-                                 onClick={handleIsOpen}>
-                                <i className="bi bi-eye-fill"></i>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div className="product-info p-1">
-                    <div className='proloop-variant d-flex justify-content-between mb-1'>
-                        <div className="">+3 Màu sắc</div>
-                        <div className="">+4 Kích thước</div>
-                    </div>
-                    <div className="text-start mb-1">
-                        Áo khoác nỉ 1 lớp cổ cao EWCS002
-                    </div>
-                    <div className="mt-2 text-start">
-                        <span className='fw-bolder text-danger'>{FormatPrice(200000)}</span>
-                        <span className='ms-2 fw-light text-decoration-line-through'
-                        style={{
-                            fontSize:'13px'
-                        }}>{FormatPrice(200000)}</span>
-                    </div>
-                </div>
+           <div className="product-content position-relative">
+               <div className='product-img position-relative'>
+                   <Link to={'/product/'+product?.id}>
+                       <div className="img-after">
+                           <figure>
+                               <img src={ImageUrl+product?.images[0]?.path}
+                                    alt=""
+                                    className='object-fit-cover '/>
+                           </figure>
+                       </div>
+                       <div className="img-before ">
+                           <figure >
+                               <img src={ImageUrl+product?.images[1].path}
+                                    alt=""
+                                    className='object-fit-cover'/>
+                           </figure>
+                       </div>
+                   </Link>
 
-                <div className="product-sale position-absolute">
-                    <span className='px-3 py-1 text-white  rounded-4'>-34%</span>
-                </div>
+                   <div className="proloop-actions position-absolute w-100">
+                       <div className="d-flex w-100 px-2 justify-content-around align-items-center"
+                       onClick={handleOpen}>
+                           <div className="proloop-cart bg-white text-uppercase px-3 py-2 fw-bold rounded" role={'button'}
+                                onClick={handleOpen}>
+                               <span className='me-1 fw-bolder'><i className="bi bi-bag"></i></span>
+                               Thêm vào giỏ
+                           </div>
+                           <div role='button' className="bg-dark d-inline-block text-white px-2 py-2 rounded "
+                                onClick={handleOpen}>
+                               <i className="bi bi-eye-fill"></i>
+                           </div>
+                       </div>
+                   </div>
 
-            </div>
+               </div>
+               <div className="product-info p-1">
+                   <div className='proloop-variant d-flex justify-content-between mb-1'>
+                       <div className="">+{product?.color_count} Màu sắc</div>
+                       <div className="">+4 Kích thước</div>
+                   </div>
+                   <div className="text-start mb-1 text-truncate">
+                       {product?.name}
+                   </div>
+                   <div className="mt-2 text-start">
+                       <span className='fw-bolder  price'>{FormatPrice(product?.price - product?.discount*product?.price || 0)}</span>
+                       {
+                           product?.discount > 0 &&     <span className='ms-2 fw-light text-decoration-line-through'
+                                                              style={{
+                                                                  fontSize:'13px'
+                                                              }}>{FormatPrice(product.price)}</span>
+                       }
+
+                   </div>
+               </div>
+
+               {
+                   product?.discount > 0 &&    <div className="product-sale position-absolute">
+                       <span className='px-3 py-1 text-white  rounded-4'>-{product?.discount * 100}%</span>
+                   </div>
+               }
+
+           </div>
 
 
         </div>

@@ -12,7 +12,7 @@ const routes = [
     element: Home,
   },
   {
-    path: "/collections",
+    path: "/collections/:codeParams",
     element: Collections,
   },
   {
@@ -24,9 +24,10 @@ const routes = [
     element: Register,
   },
   {
-    path: "/product/:key",
+    path: "/product/:id",
     element: ProductDetails,
-  },{
+  },
+  {
     path: "/cart",
     element: Cart,
   }

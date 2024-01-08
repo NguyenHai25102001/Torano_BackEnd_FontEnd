@@ -1,19 +1,70 @@
-import React, { useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Autoplay, Pagination, Navigation, FreeMode } from "swiper/modules";
+import { Autoplay, Pagination, Navigation, FreeMode ,Grid} from "swiper/modules";
 
 import { Link } from "react-router-dom";
 import ProductItem from "../components/ProductItem";
-import ProductQuickView from "../components/ProductQuickView";
+
 import HomeCollection from "../components/HomeCollection";
-import {Footer} from "../components/Footer";
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { urlCollectionProductSale, urlCollectionSubcategories} from "../Admin/components/dataApi";
+
+export  const breakpoints = {
+  // When window width is >= 320px
+  320: {
+    slidesPerView: 2,
+    spaceBetween: 10,
+  },
+  // When window width is >= 480px
+  480: {
+    slidesPerView: 2,
+    spaceBetween: 20,
+  },
+  // When window width is >= 768px
+  768: {
+    slidesPerView: 3,
+    spaceBetween: 10,
+  },
+  // When window width is >= 992px
+  992: {
+    slidesPerView: 4,
+    spaceBetween: 10,
+  },
+  // When window width is >= 1200px
+  1200: {
+    slidesPerView: 6,
+    spaceBetween: 10,
+  },
+};
 
 function Home() {
-  const [isOpen,setIsOpen]=React.useState(false)
-  const handleIsOpen=()=>{
-    setIsOpen(!isOpen)
-  }
+
+  const [collectionProSale, setCollectionProSale] = useState([]);
+  const [dataSubCategories, setDataSubCategories] = useState()
+
+  useEffect(() => {
+    const featchProductSale = async ()=>{
+       try {
+         const response= await axios.get(urlCollectionProductSale());
+
+         // console.log(response.data?.data)
+         setCollectionProSale(response.data?.data)
+       }catch (e) {
+         console.log(e);
+       }
+    }
+    featchProductSale();
+  }, []);
+
+
+
+
+
   return (
     <div className="wrapper__home">
       <div className="home-content">
@@ -57,12 +108,12 @@ function Home() {
             <h2 className="text-start text-uppercase">
               <Link to={"#"}>Danh mục sản phẩm</Link>
             </h2>
-            <div className="swiper-nav">
-              <span className="swiper-button fs-3">
-                <i className="bi bi-arrow-right"></i>
+            <div className="swiper-nav d-flex">
+              <span className=" fs-3 swiper-category-prev px-2">
+              <FontAwesomeIcon icon={faArrowLeft} />
               </span>
-              <span className="swiper-button-right swiper-button-left fs-3">
-                <i class="bi bi-arrow-right"></i>
+              <span className="fs-3 gap-1 fs-3 swiper-category-next px-2">
+               <FontAwesomeIcon icon={faArrowRight} />
               </span>
             </div>
           </div>
@@ -70,14 +121,17 @@ function Home() {
           <div className="section-content" >
             <div>
               <Swiper
-                slidesPerView={4}
-                spaceBetween={30}
+                  breakpoints={breakpoints}
                 freeMode={true}
-                modules={[FreeMode, Pagination]}
+                modules={[FreeMode, Pagination,Navigation]}
+                navigation={{
+                  prevEl : '.swiper-category-prev',
+                  nextEl: '.swiper-category-next',
+                }}
                 className="mySwiper"
               >
                 {[...Array(7)].map((item, index) => (
-                  <SwiperSlide>
+                  <SwiperSlide key={index}>
                     <div className="category-item__inner">
                       <div className="category-item__img">
                         <Link to={"#"}>
@@ -107,7 +161,7 @@ function Home() {
                 ))}
               </Swiper>
             </div>
-          </div>
+             </div>
         </div>
 
         {/*  */}
@@ -136,11 +190,11 @@ function Home() {
                 </div>
               </div>
               <div className="swiper-nav position-relative">
-                <span className="fs-3 custom-next swiper-button-next-sale
+                <span className="fs-3 custom-next   swiper-button-pre-sale
                 ">
                   <i className="bi bi-arrow-left"></i>
                 </span>
-                <span className="fs-3 swiper-button-pre-sale">
+                <span className="fs-3  swiper-button-next-sale">
                   <i className="bi bi-arrow-right"></i>
                 </span>
               </div>
@@ -149,17 +203,20 @@ function Home() {
           <div className="container">
             <Swiper
                 slidesPerView={6}
-                spaceBetween={20}
-                navigation={{
-                  nextEl: '.swiper-button-next-sale',
-                  prevEl: '.swiper-button-pre-sale',
+                    breakpoints={breakpoints}
+                    navigation={{
+                      nextEl: '.swiper-button-next-sale',
+                      prevEl: '.swiper-button-pre-sale',
+                    }}
+                    grid={{
+                      rows: 1,
                 }}
-                modules={[FreeMode,Pagination, Navigation]}>
-              {[...Array(8)].map((item, index) => (
+                modules={[Grid,FreeMode,Pagination, Navigation]}>
+              {collectionProSale?.map((item) => (
                 <SwiperSlide
-                        key={index}
+                        key={item.id}
                 >
-                  <ProductItem handleIsOpen={handleIsOpen}/>
+                  <ProductItem product={item} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -173,9 +230,8 @@ function Home() {
           </div>
         </section>
       </div>
-      <ProductQuickView status={isOpen} handleIsOpen={handleIsOpen}/>
 
-      <div className=""><HomeCollection handleIsOpen={handleIsOpen}/></div>
+      <div className=""><HomeCollection  subcategories={[ 'so-mi-dai-tay', 'ao-khoac', 'quan-jeans']} /></div>
       <section className="section-home-policy py-4">
         <div className="container">
           <div className="list-policy-row row">
